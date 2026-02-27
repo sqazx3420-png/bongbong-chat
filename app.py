@@ -98,15 +98,15 @@ st.markdown(f"""
     <div class="title-text">여왕개미 떵희, 축하해!! <span class="heart">♥</span></div>
     <div class="d-day-badge">결혼한 지 벌써 {d_day}일</div>
     <div class="content-text">
-        우리 떵희 너무너무 사랑해.<br>
-        널 위해 코딩 배워서 만들었어!<br>
+        우리 떵희 생일 너무너무 축하해!.<br>
+        널 위해 나의 분신을 만들었어!<br>
         우리 평생 행복하게 살자. <br>
         생일 진짜 축하해! 🎂
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('<div style="text-align:center; color:#ff85c0; font-weight:bold; margin-bottom: 25px;">👇 아래에 봉봉이 하고 싶은 말을 적어봐! 내가 다 들어줄게 👇</div>', unsafe_allow_html=True)
+st.markdown('<div style="text-align:center; color:#ff85c0; font-weight:bold; margin-bottom: 25px;">👇 아래에 하고 싶은 말을 적어봐! 내가 다 들어줄게 👇</div>', unsafe_allow_html=True)
 
 # --- 상태 관리 (세션) ---
 if "messages" not in st.session_state:
