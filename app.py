@@ -117,7 +117,7 @@ if "messages" not in st.session_state:
     st.session_state.messages.append({"role": "assistant", "content": welcome_msg})
 
 # --- API 키 설정 ---
-api_key_input = "AIzaSyB3q-xLl6utZrvBhfbEJGMmvnc_YIJFemc"
+api_key_input = "AIzaSyC-TG5PzW74zTO2EBcz7YGQTyvXqQmp770"
 
 # --- 프롬프트 (AI 성격 부여) ---
 system_prompt = """
