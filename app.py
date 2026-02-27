@@ -5,38 +5,107 @@ import time
 # --- 페이지 설정 ---
 st.set_page_config(page_title="봉봉만을 위한 남편봇 🤖", page_icon="💌", layout="centered")
 
-# --- UI 스타일링 (CSS) ---
+# --- UI 디자인 대폭 업그레이드 (프리미엄 감성) ---
 st.markdown("""
 <style>
-    /* 상단 헤더 숨기기 */
+    /* 예쁜 감성 폰트 적용 (고딕/명조 느낌) */
+    @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+    
+    * {
+        font-family: 'Gowun Dodum', sans-serif !important;
+    }
+    
+    /* 상단 헤더 및 푸터 숨기기 */
     header {visibility: hidden;}
-    /* 푸터 숨기기 */
     footer {visibility: hidden;}
     
-    /* 타이틀 스타일 */
-    .main-title {
-        color: #FF69B4;
+    /* 정성이 담긴 편지 박스 (고급스러운 투명도 효과) */
+    .letter-box {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 30px 20px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
+        border: 2px solid rgba(255, 182, 193, 0.6);
         text-align: center;
-        font-family: 'Malgun Gothic', sans-serif;
+        margin-bottom: 20px;
+        animation: fadeInDown 1.2s ease-out;
+    }
+    
+    /* 박스 나타나는 애니메이션 */
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* 제목 텍스트 스타일 */
+    .title-text {
+        color: #ff4d85;
+        font-size: 24px;
         font-weight: 800;
         margin-bottom: 10px;
     }
-    .subtitle {
-        color: #ff85c0;
-        text-align: center;
+    
+    /* 편지 내용 스타일 */
+    .content-text {
+        color: #555555;
         font-size: 16px;
-        margin-bottom: 30px;
-        font-weight: bold;
+        line-height: 1.8;
+        margin-top: 15px;
     }
-    /* 채팅창 입력 부분 */
-    .stChatInputContainer {
-        border-radius: 20px !important;
+    
+    /* 디데이 뱃지 */
+    .d-day-badge {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        color: #d81b60;
+        padding: 6px 18px;
+        border-radius: 30px;
+        font-weight: 900;
+        font-size: 15px;
+        display: inline-block;
+        box-shadow: 0 4px 10px rgba(255, 105, 180, 0.2);
+    }
+    
+    /* 하트 두근두근 애니메이션 */
+    .heart {
+        display: inline-block;
+        animation: heartPulse 1.2s infinite;
+        color: #ff4d85;
+    }
+    
+    @keyframes heartPulse {
+        0% { transform: scale(1); }
+        15% { transform: scale(1.3); }
+        30% { transform: scale(1); }
+        45% { transform: scale(1.3); }
+        60% { transform: scale(1); }
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<h2 class="main-title">봉봉을 위한 맞춤형 남편봇 🎀</h2>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">"어휴 덜렁아, 오늘은 또 무슨 일이야? 말해봐 내가 다 들어줄게."</div>', unsafe_allow_html=True)
+from datetime import datetime
+
+# --- 수정할 부분: 만난 날짜 (연, 월, 일) ---
+start_date = datetime(2019, 10, 20) 
+today = datetime.now()
+d_day = (today - start_date).days + 1
+
+# --- 로맨틱한 편지 UI 출력 ---
+st.markdown(f"""
+<div class="letter-box">
+    <div class="title-text">양산 여왕개미 떵희, 생일 축하해!! <span class="heart">♥</span></div>
+    <div class="d-day-badge">우리 떵희와 만난 지 벌써 {d_day}일</div>
+    <div class="content-text">
+        양산 여왕개미 떵희 떵희!<br>
+        항상 고맙고 사랑해.<br>
+        내가 떵희만을 위해서 코딩 배워서 특별한 챗봇 만들었어!<br>
+        앞으로도 우리 재밌고 행복하게 살자. <br>
+        생일 진짜진짜 축하해! 🎂
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<div style="text-align:center; color:#ff85c0; font-weight:bold; margin-bottom: 25px;">👇 아래에 봉봉이 하고 싶은 말을 적어봐! 내가 다 들어줄게 👇</div>', unsafe_allow_html=True)
 
 # --- 상태 관리 (세션) ---
 if "messages" not in st.session_state:
