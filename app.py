@@ -174,19 +174,37 @@ if prompt := st.chat_input("우리 봉봉, 하고 싶은 말을 써봐!"):
                 
             chat = model.start_chat(history=history)
             
-            # AI에게 메시지 보내고 스트리밍 응답 받기
-            response = chat.send_message(prompt, stream=True)
+            # AI에게 메시지 보내고 스트리밍 응답 받기 (무료버전 속도제한 방지 장치 추가)
+            max_retries = 3
+            retry_count = 0
             
-            full_response = ""
-            for chunk in response:
-                full_response += chunk.text
-                message_placeholder.markdown(full_response + "▌")
-                time.sleep(0.01) # 타자치듯 효과
-                
-            message_placeholder.markdown(full_response)
-            
-            # 세션에 AI 답변 저장
-            st.session_state.messages.append({"role": "assistant", "content": full_response})
-            
+            while retry_count < max_retries:
+                try:
+                    response = chat.send_message(prompt, stream=True)
+                    
+                    full_response = ""
+                    for chunk in response:
+                        full_response += chunk.text
+                        message_placeholder.markdown(full_response + "▌")
+                        time.sleep(0.01) # 타자치듯 효과
+                        
+                    message_placeholder.markdown(full_response)
+                    
+                    # 세션에 AI 답변 저장
+                    st.session_state.messages.append({"role": "assistant", "content": full_response})
+                    break # 성공하면 반복문 탈출
+                    
+                except Exception as e:
+                    if "429" in str(e) or "Quota exceeded" in str(e):
+                        retry_count += 1
+                        if retry_count < max_retries:
+                            message_placeholder.markdown(f"으이구! 네가 너무 빨리 말해서 내가 좀 숨차. 🥴 (10초만 기다렸다가 다시 대답해줄게... {retry_count}/{max_retries})")
+                            time.sleep(10) # 10초 대기 후 재시도
+                        else:
+                            message_placeholder.markdown("아이고 숨차 죽겠다! 우리 봉봉이 말이 너무 많아! 한 1분만 쉬었다가 다시 말 걸어줘~ 😭")
+                    else:
+                        raise e # 다른 에러면 원래대로 에러 발생시키기
+                    
         except Exception as e:
-            message_placeholder.markdown(f"으이구! 남편 뇌(AI)에 에러가 났나봐. 얼른 남편한테 고쳐내라고 해! 😭\n({e})")
+            if "429" not in str(e) and "Quota exceeded" not in str(e):
+                message_placeholder.markdown(f"으이구! 남편 뇌(AI)에 에러가 났나봐. 얼른 남편한테 고쳐내라고 해! 😭\n({e})")
