@@ -163,7 +163,7 @@ if prompt := st.chat_input("우리 봉봉, 하고 싶은 말을 써봐!"):
         try:
             # 제미나이 설정
             genai.configure(api_key=api_key_input)
-            model = genai.GenerativeModel('gemini-2.0-flash',
+            model = genai.GenerativeModel('gemini-2.5-flash',
                                           system_instruction=system_prompt)
             
             # 대화 기록 구성
