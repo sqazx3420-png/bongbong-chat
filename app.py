@@ -117,7 +117,11 @@ if "messages" not in st.session_state:
     st.session_state.messages.append({"role": "assistant", "content": welcome_msg})
 
 # --- API 키 설정 ---
-api_key_input = "AIzaSyC-TG5PzW74zTO2EBcz7YGQTyvXqQmp770"
+try:
+    api_key_input = st.secrets["gemini_api_key"]
+except Exception:
+    st.error("앗! Streamlit 설정(Secrets)에 API 키가 입력되지 않았습니다. 앱 설정에서 API 키를 추가해주세요!")
+    st.stop()
 
 # --- 프롬프트 (AI 성격 부여) ---
 system_prompt = """
