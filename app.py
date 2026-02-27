@@ -23,7 +23,7 @@ st.markdown("""
     .letter-box {
         background: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(10px);
-        padding: 30px 20px;
+        padding: 20px 10px; /* 모바일용 여백 축소 */
         border-radius: 20px;
         box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
         border: 2px solid rgba(255, 182, 193, 0.6);
@@ -41,27 +41,29 @@ st.markdown("""
     /* 제목 텍스트 스타일 */
     .title-text {
         color: #ff4d85;
-        font-size: 24px;
+        font-size: 20px; /* 모바일용 폰트 축소 */
         font-weight: 800;
         margin-bottom: 10px;
+        word-break: keep-all; /* 단어 단위로 줄바꿈 (깔끔하게) */
     }
     
     /* 편지 내용 스타일 */
     .content-text {
         color: #555555;
-        font-size: 16px;
-        line-height: 1.8;
+        font-size: 15px; /* 모바일용 폰트 축소 */
+        line-height: 1.6; /* 줄간격 축소 */
         margin-top: 15px;
+        word-break: keep-all; /* 텍스트 깨짐 방지 */
     }
     
     /* 디데이 뱃지 */
     .d-day-badge {
         background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
         color: #d81b60;
-        padding: 6px 18px;
+        padding: 6px 14px;
         border-radius: 30px;
         font-weight: 900;
-        font-size: 15px;
+        font-size: 14px;
         display: inline-block;
         box-shadow: 0 4px 10px rgba(255, 105, 180, 0.2);
     }
@@ -93,14 +95,13 @@ d_day = (today - start_date).days + 1
 # --- 로맨틱한 편지 UI 출력 ---
 st.markdown(f"""
 <div class="letter-box">
-    <div class="title-text">양산 여왕개미 떵희, 생일 축하해!! <span class="heart">♥</span></div>
-    <div class="d-day-badge">우리 떵희와 만난 지 벌써 {d_day}일</div>
+    <div class="title-text">여왕개미 떵희, 축하해!! <span class="heart">♥</span></div>
+    <div class="d-day-badge">결혼한 지 벌써 {d_day}일</div>
     <div class="content-text">
-        양산 여왕개미 떵희 떵희!<br>
-        항상 고맙고 사랑해.<br>
-        내가 떵희만을 위해서 코딩 배워서 특별한 챗봇 만들었어!<br>
-        앞으로도 우리 재밌고 행복하게 살자. <br>
-        생일 진짜진짜 축하해! 🎂
+        우리 떵희 너무너무 사랑해.<br>
+        널 위해 코딩 배워서 만들었어!<br>
+        우리 평생 행복하게 살자. <br>
+        생일 진짜 축하해! 🎂
     </div>
 </div>
 """, unsafe_allow_html=True)
