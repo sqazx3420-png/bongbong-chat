@@ -184,9 +184,13 @@ if prompt := st.chat_input("우리 봉봉, 하고 싶은 말을 써봐!"):
                     
                     full_response = ""
                     for chunk in response:
-                        full_response += chunk.text
-                        message_placeholder.markdown(full_response + "▌")
-                        time.sleep(0.01) # 타자치듯 효과
+                        try:
+                            if chunk.text:
+                                full_response += chunk.text
+                                message_placeholder.markdown(full_response + "▌")
+                                time.sleep(0.01) # 타자치듯 효과
+                        except Exception:
+                            pass # 텍스트가 없는 응답 덩어리는 무시
                         
                     message_placeholder.markdown(full_response)
                     
