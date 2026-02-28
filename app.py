@@ -98,8 +98,9 @@ def save_chat_log(role, content):
     try:
         with open(log_file_path, "a", encoding="utf-8") as f:
             f.write(f"[{timestamp}] {role}: {content}\n")
-    except Exception:
-        pass # 에러 발생해도 앱이 멈추지 않게 무시
+    except Exception as e:
+        import streamlit as st
+        st.error(f"파일 저장 에러: {e}") # 에러 내용을 화면에 출력해서 원인 파악
 
 # --- 수정할 부분: 만난 날짜 (연, 월, 일) ---
 start_date = datetime(2019, 10, 20) 
