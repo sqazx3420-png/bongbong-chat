@@ -85,13 +85,18 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+import os
 from datetime import datetime
 
 # --- 채팅 기록 몰래 저장하는 함수 ---
 def save_chat_log(role, content):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # 현재 파일(app.py)이 있는 폴더의 절대 경로를 구합니다.
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    log_file_path = os.path.join(current_dir, "chat_log.txt")
+    
     try:
-        with open("chat_log.txt", "a", encoding="utf-8") as f:
+        with open(log_file_path, "a", encoding="utf-8") as f:
             f.write(f"[{timestamp}] {role}: {content}\n")
     except Exception:
         pass # 에러 발생해도 앱이 멈추지 않게 무시
