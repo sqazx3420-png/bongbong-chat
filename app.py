@@ -5,6 +5,8 @@ import time
 # --- 페이지 설정 ---
 st.set_page_config(page_title="봉봉만을 위한 남편봇 🤖", page_icon="💌", layout="centered")
 
+st.sidebar.success("✅ 채팅 자동저장 기능이 포함된 최신 버전이 실행 중입니다.")
+
 # --- UI 디자인 대폭 업그레이드 (프리미엄 감성) ---
 st.markdown("""
 <style>
