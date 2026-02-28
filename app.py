@@ -90,31 +90,29 @@ st.markdown("""
 import os
 from datetime import datetime
 
-# --- 채팅 기록 몰래 저장하는 함수 ---
+# --- 채팅 기록 저장 설정 (Streamlit Cloud 환경 대응) ---
+# Streamlit Cloud에서는 로컬 파일(PC)에 저장할 수 없으므로, 앱 내의 숨겨진 공간에 기록을 남깁니다.
+if "hidden_chat_log" not in st.session_state:
+    st.session_state.hidden_chat_log = []
+
 def save_chat_log(role, content):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    # 현재 파일(app.py)이 있는 폴더의 절대 경로를 구합니다.
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    log_file_path = os.path.join(current_dir, "chat_log.txt")
-    
-    try:
-        with open(log_file_path, "a", encoding="utf-8") as f:
-            f.write(f"[{timestamp}] {role}: {content}\n")
-            f.flush() # 즉시 파일에 쓰기
-            os.fsync(f.fileno())
-    except Exception as e:
-        import streamlit as st
-        st.error(f"파일 저장 에러: {e}") # 에러 내용을 화면에 출력해서 원인 파악
-
-# 디버깅용: 경로 확인
-if "debug" not in st.session_state:
-    st.sidebar.info(f"📁 로그가 저장될 실제 경로: {os.path.join(os.path.dirname(os.path.abspath(__file__)), 'chat_log.txt')}")
-
+    st.session_state.hidden_chat_log.append(f"[{timestamp}] {role}: {content}")
 
 # --- 수정할 부분: 만난 날짜 (연, 월, 일) ---
 start_date = datetime(2019, 10, 20) 
 today = datetime.now()
 d_day = (today - start_date).days + 1
+
+# --- 관리자용 몰래보기 기능 (사이드바 제일 아래) ---
+with st.sidebar.expander("🕵️‍♂️ 관리자 공간 (비밀)"):
+    st.markdown("**지금까지의 대화 내용 (새로고침 시 초기화)**")
+    if len(st.session_state.hidden_chat_log) > 0:
+        for log in st.session_state.hidden_chat_log:
+            st.text(log)
+    else:
+        st.text("아직 대화가 없습니다.")
+
 
 # --- 로맨틱한 편지 UI 출력 ---
 st.markdown(f"""
